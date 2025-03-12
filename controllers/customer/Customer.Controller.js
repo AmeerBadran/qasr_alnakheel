@@ -1,3 +1,7 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
+
 const Customer = require("../../models/Customer.model");
 const Booking = require("../../models/Booking.model");
 const CustomerMobile = require("../../models/CustomerMobile.model");
@@ -101,4 +105,16 @@ export const hallRating = async (req, res) => {
 
     await Rating.create({ customer_id, hall_id, rating, comment });
     return res.status(201).json({ message: getMessage("ratingDone", lang) });
+}
+
+export const deleteCustomer=async(req,res)=>{
+    const lang = getLanguage(req);
+    const { id } = req.params;
+    const customer = await Customer.findByPk(id);
+    if (!customer) {
+        return res.status(404).json({ message: getMessage("customerNotFound", lang) });
+    }
+
+    await Customer.destroy({ where: { id } });
+    res.status(204).json({ message: getMessage("customerDeleted", lang) });
 }
