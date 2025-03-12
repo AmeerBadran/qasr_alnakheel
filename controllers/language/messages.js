@@ -112,7 +112,8 @@ const messages = {
         updatedRestaurant: "Updated restaurant successfully",
         restaurantDeleted: "Restaurant deleted successfully",
         invalidreservationDate: "Invalid reservation date",
-        restaurantFull: "Restaurant full in this time"
+        restaurantFull: "Restaurant full in this time",
+        customersNotFound:"Customers not found"
     },
     ar: {
         emailExists: "البريد الإلكتروني موجود بالفعل",
@@ -227,7 +228,8 @@ const messages = {
         updatedRestaurant: "تم تحديث المطعم بنجاح",
         restaurantDeleted: "تم حذف المطعم بنجاح",
         invalidreservationDate: "وقت الحجز غير صالح",
-        restaurantFull: "المطعم ممتلئ في هذا الوقت"
+        restaurantFull: "المطعم ممتلئ في هذا الوقت",
+        customersNotFound:"لم يتم العثور على الزبائن"
     }
 };
 

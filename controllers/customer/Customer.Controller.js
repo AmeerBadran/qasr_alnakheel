@@ -24,8 +24,8 @@ export const getCustomerById = async (req, res) => {
             { model: CustomerMobile },
             { model: Contact },
             { model: Rating },
-            {model: CustomerPool },
-            {model:HallReservation },
+            { model: CustomerPool },
+            { model: HallReservation },
         ]
 
     });
@@ -35,9 +35,22 @@ export const getCustomerById = async (req, res) => {
     res.status(200).json(customer);
 }
 
+export const getAllCustomers = async (req, res) => {
+    const lang = getLanguage(req);
+    const customers = await Customer.findAll({
+        include: [
+            { model: CustomerMobile },
+        ]
+    });
+    if (!customers) {
+        return res.status(404).json({ message: getMessage("customersNotFound", lang) });
+    }
+    res.status(200).json(customers);
+}
+
 export const roomRating = async (req, res) => {
     const lang = getLanguage(req);
-    const customer_id = req.params.id; 
+    const customer_id = req.params.id;
     const { room_id, rating, comment } = req.body;
 
     const customer = await Customer.findByPk(customer_id);
@@ -107,7 +120,7 @@ export const hallRating = async (req, res) => {
     return res.status(201).json({ message: getMessage("ratingDone", lang) });
 }
 
-export const deleteCustomer=async(req,res)=>{
+export const deleteCustomer = async (req, res) => {
     const lang = getLanguage(req);
     const { id } = req.params;
     const customer = await Customer.findByPk(id);

@@ -13,6 +13,7 @@ router.post('/login', upload.none(), logIn);
 router.post('/logout', logOut);
 router.post('/sendVerificationCode', upload.none(), sendVerificationCode);
 router.post('/verifyAccount', upload.none(), verifyAccount);
+
 router.get('/', getUserData);
 
 module.exports = router;
