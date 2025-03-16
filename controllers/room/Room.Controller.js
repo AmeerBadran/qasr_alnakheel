@@ -363,9 +363,8 @@ export const createSpecialPricing = async (req, res) => {
         end_date: endDate,
         price,
     });
-
+    
     res.status(201).json({ message: getMessage("addedSpecialPricing", lang), specialPricing: specialPricing });
-
 }
 
 export const getSpecialPrice = async (req, res) => {

@@ -20,7 +20,6 @@ router.patch("/acceptReservation/:id", acceptRestaurantReservation);
 router.delete("/reservation/:id", deleteReservation);
 //
 
-
 router.get('/', getRestaurants)
 router.get('/:id', getRestaurantById)
 

@@ -7,10 +7,14 @@ const Customer = require("../../models/Customer.model");
 
 const router = express.Router();
 
+const callbackURL = process.env.NODE_ENV === "production"
+    ? "https://qasr-alnakheel.onrender.com/auth/facebook/callback"
+    : "http://localhost:3000/auth/facebook/callback";
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: "/auth/facebook/callback",
+    callbackURL,
+    //callbackURL: "/auth/facebook/callback",
     profileFields: ["id", "emails", "name", "picture.type(large)"],
 }, async (accessToken, refreshToken, profile, done) => {
     try {

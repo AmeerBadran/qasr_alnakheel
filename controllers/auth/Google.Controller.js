@@ -58,7 +58,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 /*
-Step 1: Call this API "/google/callback"  
+Call this API "/google/callback"  
 The request will be handled by the `passport` configuration above,  
 where the user's profile data will be retrieved from Google and returned with the user data.  
 

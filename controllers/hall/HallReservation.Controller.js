@@ -171,17 +171,13 @@ export const deleteReservation = async (req, res) => {
 
 
 export const getFutureReservations = async (req, res) => {
-    try {
-        const lang = getLanguage(req);
+    const lang = getLanguage(req);
 
-        const reservations = await HallReservation.findAll({
-            where: {
-                start_time: { [Op.gt]: new Date() },
-            },
-        });
+    const reservations = await HallReservation.findAll({
+        where: {
+            start_time: { [Op.gt]: new Date() },
+        },
+    });
 
-        res.status(200).json({ reservations });
-    } catch (error) {
-        res.status(500).json({ message: getMessage("serverError", lang), error: error.message });
-    }
+    res.status(200).json({ reservations });
 };

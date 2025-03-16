@@ -27,7 +27,6 @@ export const createHall = async (req, res) => {
 
     const t = await Sequelize.transaction();
     try {
-
         const hall = await Hall.create({
             name: { ar: name_ar, en: name_en },
             capacity,
@@ -175,35 +174,6 @@ export const updateMainImage = async (req, res) => {
     res.status(200).json({ message: getMessage("updatedImage", lang) });
 }
 
-/*
-export const addHallFacilities = async (req, res) => {
-    const lang = getLanguage(req);
-    const hall_id = req.params.id;
-    const { facilities } = req.body;
-
-    if (!facilities || !Array.isArray(facilities)) {
-        return res.status(400).json({ message: getMessage("facilitiesRequired", lang) });
-    }
-
-    const parsedFacilities = JSON.parse(facilities);
-    let uploadedImages = req.files['images'] ? req.files['images'].map(file => file.filename) : [];
-
-    while (uploadedImages.length < parsedFacilities.length) {
-        uploadedImages.push(null);
-    }
-
-    const facilitiesWithImages = parsedFacilities.map((facility, index) => ({
-        hall_id,
-        name: facility.name,
-        description: facility.description,
-        image: uploadedImages[index] || null
-    }));
-
-    const createdFacilities = await HallFacilities.bulkCreate(facilitiesWithImages);
-
-    res.status(201).json({ message: getMessage("facilitiesAdded", lang), data: createdFacilities });
-}
-*/
 
 export const addFacility = async (req, res) => {
     const lang = getLanguage(req);

@@ -45,6 +45,7 @@ const uploadRoomImages = createMulterUpload('roomImages', { fileSize: 15 * 1024 
     { name: 'mainImage', maxCount: 1 },
     { name: 'additionalImages', maxCount: 10 }
 ]);
+
 const uploadSingleRoomImage = createMulterUpload('roomImages', { fileSize: 15 * 1024 * 1024 });
 
 const uploadHallImages = createMulterUpload('hallImages', { fileSize: 15 * 1024 * 1024 }, [
