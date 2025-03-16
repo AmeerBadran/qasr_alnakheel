@@ -7,10 +7,15 @@ const Customer = require("../../models/Customer.model");
 
 const router = express.Router();
 
+const callbackURL = process.env.NODE_ENV === "production"
+    ? "https://qasr-alnakheel.onrender.com/auth/google/callback"
+    : "http://localhost:3000/auth/google/callback";
+
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/auth/google/callback",
+    //callbackURL: "/auth/google/callback",
+    callbackURL,
     scope: ["profile", "email"],
     passReqToCallback: true
 }, async (request, accessToken, refreshToken, profile, done) => {

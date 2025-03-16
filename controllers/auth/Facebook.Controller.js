@@ -18,6 +18,7 @@ passport.use(new FacebookStrategy({
     profileFields: ["id", "emails", "name", "picture.type(large)"],
 }, async (accessToken, refreshToken, profile, done) => {
     try {
+        console.log(profile)
         const facebook_id = profile.id;
         if (!facebook_id) {
             return done(null, false, { message: "Facebook ID not found in profile" });
