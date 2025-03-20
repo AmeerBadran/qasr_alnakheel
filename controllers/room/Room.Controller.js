@@ -4,6 +4,7 @@ const require = createRequire(import.meta.url);
 
 const fs = require("fs");
 import { fileURLToPath } from "url";
+const sequelize = require("../../config/dbConnection");
 
 const path = require("path");
 
@@ -513,8 +514,22 @@ export const addRoomType = async (req, res) => {
 }
 
 export const getRoomTypes = async (req, res) => {
-    const lang = getLanguage(req);
-    const roomTypes = await RoomType.findAll();
+    const roomTypes = await RoomType.findAll({
+        include: [
+            {
+                model: Room,
+                attributes: [],
+            }
+        ],
+        attributes: [
+            "id",
+            "name",
+            "description",
+            [sequelize.fn("COUNT", sequelize.col("Rooms.id")), "room_count"]
+        ],
+        group: ["RoomType.id"]
+    });
+
     res.status(200).json(roomTypes);
 }
 
