@@ -19,6 +19,8 @@ const hall = require("./controllers/hall/Hall.Routes");
 const pool = require("./controllers/pool/Pool.Routes");
 const restaurant = require("./controllers/restaurant/Restaurant.Routes");
 const customer = require("./controllers/customer/Customer.Routes");
+const payment = require("./controllers/payment/Payment.Routes");
+const general = require("./controllers/general/General.Routes");
 
 require('./config/sync');
 
@@ -66,6 +68,8 @@ app.use("/api/halls", hall)
 app.use("/api/pools", pool)
 app.use("/api/restaurants", restaurant)
 app.use("/api/customers", customer)
+app.use("/api/payment", payment)
+app.use("/api/general", general)
 
 app.get("/", (req, res) => {
   res.send("Hello, Backend is running!");

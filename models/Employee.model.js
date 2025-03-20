@@ -50,7 +50,7 @@ const Employee = sequelize.define("Employee", {
     defaultValue: "Active",
   },
   role: {
-    type: DataTypes.ENUM("admin", "employee"),
+    type: DataTypes.ENUM("admin", "employee","reception"),
     allowNull: false,
   },
   hall_id: {

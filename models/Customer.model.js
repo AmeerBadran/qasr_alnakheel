@@ -60,6 +60,10 @@ const Customer = sequelize.define("Customer", {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  createdAt:{
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  }
 }, { timestamps: false });
 
 module.exports = Customer;

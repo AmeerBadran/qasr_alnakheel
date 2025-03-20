@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConnection");
-const Customer = require("./Customer.model"); 
+const Customer = require("./Customer.model");
 
 const Payment = sequelize.define("Payment", {
   payment_no: {
@@ -35,6 +35,14 @@ const Payment = sequelize.define("Payment", {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
+  invoice_id: { 
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  invoice_type: { 
+    type: DataTypes.ENUM("Booking", "CustomerPool", "CustomerRestaurant", "HallReservation"),
+    allowNull: false,
+  }
 }, { timestamps: false });
 
 

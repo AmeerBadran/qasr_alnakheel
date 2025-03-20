@@ -18,7 +18,6 @@ passport.use(new FacebookStrategy({
     profileFields: ["id", "emails", "name", "picture.type(large)"],
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        console.log(profile)
         const facebook_id = profile.id;
         if (!facebook_id) {
             return done(null, false, { message: "Facebook ID not found in profile" });
@@ -63,20 +62,20 @@ router.get("/facebook/callback", passport.authenticate("facebook", { failureRedi
     const accessToken = jwt.sign(
         { id: req.user.id, role: "user", is_verified: req.user.is_verified },
         process.env.JWT_ACCESS_SECRET,
-        { expiresIn: "24h" }
+        { expiresIn: "7d" }
     );
 
     res.cookie("QasrAlNakheel", accessToken, {
         httpOnly: true,
         secure: true,
         sameSite: "None",
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.redirect(process.env.FRONTEND_URL || "http://localhost:5173");
 });
 
-
+/*
 router.get("/facebook/logout", (req, res) => {
     res.clearCookie("QasrAlNakheel");
     req.logout(() => {
@@ -85,5 +84,5 @@ router.get("/facebook/logout", (req, res) => {
         });
     });
 });
-
+*/
 module.exports = router;

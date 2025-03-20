@@ -10,13 +10,13 @@ const { uploadServiceImage } = require('../../config/multerConfig.js');
 const { verifyTokenAdmin } = require('../../middleware/verifyToken.js');
 
 
-router.post('/', verifyTokenAdmin, uploadServiceImage, addService);
+router.post('/', uploadServiceImage, addService);
 
 router.get('/', getAllServices)
 
-router.put('/:id', verifyTokenAdmin, uploadServiceImage, updateService);
+router.put('/:id', uploadServiceImage, updateService);
 
-router.delete('/:id', verifyTokenAdmin, deleteService)
+router.delete('/:id', deleteService)
 
 module.exports = router;
 

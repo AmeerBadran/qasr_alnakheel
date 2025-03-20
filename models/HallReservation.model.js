@@ -43,11 +43,16 @@ const HallReservation = sequelize.define("HallReservation", {
     },
     status: {
         type: DataTypes.ENUM("pending", "confirmed", "cancelled"),
-        defaultValue: "pending",
+        defaultValue: "confirmed",
+        allowNull: false,
+    },
+    payed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
         allowNull: false,
     },
 }, {
-    timestamps: true,
+    timestamps: false,
 })
 
 Hall.hasMany(HallReservation, { foreignKey: "hall_id" });

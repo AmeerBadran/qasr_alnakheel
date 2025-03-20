@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/dbConnection");
+const Pool = require("./Pool.model");
 
 const CustomerPool = sequelize.define("CustomerPool", {
     id: {
@@ -19,10 +20,6 @@ const CustomerPool = sequelize.define("CustomerPool", {
     pool_id: {
         type: DataTypes.UUID,
         allowNull: false,
-        references: {
-            model: "Pools",
-            key: "id",
-        },
         onDelete: "CASCADE",
     },
     reservation_time: {
@@ -51,9 +48,10 @@ const CustomerPool = sequelize.define("CustomerPool", {
         type: DataTypes.ENUM("reserved", "checked_in", "checked_out", "canceled"),
         defaultValue: "reserved",
     },
-    payment_method: {
-        type: DataTypes.ENUM("cash", "credit_card", "digital_wallet"),
-        allowNull: true,
+    payed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
     },
     total_price: {
         type: DataTypes.DECIMAL(10, 2),
@@ -64,5 +62,8 @@ const CustomerPool = sequelize.define("CustomerPool", {
         allowNull: true,
     }
 }, { timestamps: false });
+
+Pool.hasMany(CustomerPool, { foreignKey: "pool_id" });
+CustomerPool.belongsTo(Pool, { foreignKey: "pool_id" });
 
 module.exports = CustomerPool;

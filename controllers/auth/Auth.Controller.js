@@ -19,9 +19,24 @@ export const signUp = async (req, res) => {
     const lang = getLanguage(req);
     const { first_name, last_name, country, city, postal_code, birthdate, email, password, mobileNo } = req.body;
 
+    const existingUser = await Customer.findOne({ where: { email } });
+    if (existingUser) {
+        return res.status(400).json({ message: getMessage("emailExists", lang) });
+    }
 
-    const user = await Customer.findOne({ where: { email } });
-    if (user) return res.status(400).json({ message: getMessage("emailExists", lang) });
+    if (Array.isArray(mobileNo) && mobileNo.length > 0) {
+        const existingMobiles = await CustomerMobile.findAll({
+            where: { mobile_no: mobileNo },
+            attributes: ["mobile_no"],
+        });
+
+        if (existingMobiles.length > 0) {
+            return res.status(400).json({
+                message: getMessage("mobileExists", lang),
+                usedNumbers: existingMobiles.map(m => m.mobile_no)
+            });
+        }
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -65,13 +80,13 @@ export const logIn = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: getMessage("wrongPassword", lang) });
 
-    const accessToken = jwt.sign({ id: user.id, role: 'user', is_verified: user.is_verified }, process.env.JWT_ACCESS_SECRET, { expiresIn: '24h' });
+    const accessToken = jwt.sign({ id: user.id, role: 'user', is_verified: user.is_verified }, process.env.JWT_ACCESS_SECRET, { expiresIn: '7d' });
 
     res.cookie("QasrAlNakheel", accessToken, {
         httpOnly: true,
         secure: true,
         sameSite: "None",
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
 
@@ -135,7 +150,7 @@ export const getUserData = async (req, res) => {
 const verificationCodes = {};
 
 export const sendVerificationCode = async (req, res) => {
-    
+
     const lang = getLanguage(req);
     const { email } = req.body;
 
@@ -206,6 +221,11 @@ export const logOut = (req, res) => {
         httpOnly: true,
         secure: "production",
         sameSite: "None",
+    });
+    req.logout(() => {
+        req.session.destroy(() => {
+            res.redirect(process.env.FRONTEND_URL || "http://localhost:5173");
+        });
     });
     return res.status(200).json({ message: getMessage("loggedOut", lang) });
 };

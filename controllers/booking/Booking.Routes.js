@@ -8,7 +8,7 @@ const { verifyTokenUserVerified } = require('../../middleware/verifyToken');
 const upload = multer();
 
 
-router.post('/:id', upload.none(), verifyTokenUserVerified, createBooking);
+router.post('/:id', upload.none(), createBooking);
 
 router.get('/', getAllBookings);
 router.get('/customerBookings/:id', getBookingsByCustomer);

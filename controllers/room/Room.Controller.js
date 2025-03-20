@@ -363,7 +363,7 @@ export const createSpecialPricing = async (req, res) => {
         end_date: endDate,
         price,
     });
-    
+
     res.status(201).json({ message: getMessage("addedSpecialPricing", lang), specialPricing: specialPricing });
 }
 
@@ -546,3 +546,55 @@ export const deleteRoomType = async (req, res) => {
     await roomType.destroy();
     res.status(200).json({ message: getMessage("roomTypeDeleted", lang) });
 }
+
+
+export const getRoomTypeImage = async (req, res) => {
+    const lang = getLanguage(req);
+    const typeId = req.params.id;
+
+    const roomTypeExists = await RoomType.findByPk(typeId);
+    if (!roomTypeExists) {
+        return res.status(404).json({ message: getMessage("roomTypeNotFound", lang) });
+    }
+
+    const roomsWithImages = await Room.findAll({
+        where: { type: typeId },
+        include: [
+            {
+                model: RoomImage,
+                where: { main: true },
+                attributes: ["id", "image_name_url"],
+            },
+        ],
+        attributes: ["id"],
+    });
+
+    if (!roomsWithImages.length) {
+        return res.status(404).json({ message: getMessage("roomNotFound", lang) });
+    }
+
+    res.status(200).json(roomsWithImages);
+};
+
+
+export const getRoomsImage = async (req, res) => {
+    const lang = getLanguage(req);
+
+    const roomsWithImages = await Room.findAll({
+        include: [
+            {
+                model: RoomImage,
+                where: { main: true },
+                attributes: ["id", "image_name_url"],
+                required: false,
+            },
+        ],
+        attributes: ["id"],
+    });
+
+    if (!roomsWithImages.length) {
+        return res.status(404).json({ message: getMessage("roomNotFound", lang) });
+    }
+
+    res.status(200).json(roomsWithImages);
+};

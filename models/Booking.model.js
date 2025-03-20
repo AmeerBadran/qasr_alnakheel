@@ -22,12 +22,10 @@ const Booking = sequelize.define("Booking", {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  payment_status: {
-    type: DataTypes.STRING,
+  payed: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
     allowNull: false,
-    validate: {
-      isIn: [["pending", "paid", "refunded"]],
-    },
   },
   status: {
     type: DataTypes.STRING,
@@ -35,6 +33,7 @@ const Booking = sequelize.define("Booking", {
     validate: {
       isIn: [["confirmed", "canceled", "pending"]],
     },
+    defaultValue:"confirmed"
   },
 }, { timestamps: false });
 

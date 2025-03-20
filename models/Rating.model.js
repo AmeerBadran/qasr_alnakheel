@@ -33,6 +33,14 @@ const Rating = sequelize.define("Rating", {
     },
     onDelete: "CASCADE",
   },
+  rest_id:{
+    type: DataTypes.UUID,
+    references: {
+      model: "Restaurants",
+      key: "id",
+    },
+    onDelete: "CASCADE",
+  },
   customer_id: {
     type: DataTypes.UUID,
     allowNull: false,
