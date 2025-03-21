@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const multer = require("multer");
-const { addRoom, deleteRoom, getAllRooms, getRoomById, updateRoom, addRoomImage, deleteRoomImage, updateMainImage, updateRoomPricing, createSpecialPricing, updateSpecialPricing, getSpecialPrice, addRoomType, getRoomTypes, deleteRoomType, updateRoomType, getRoomTypeImage, getRoomsImage } = require('./Room.Controller');
+const { addRoom, deleteRoom, getAllRooms, getRoomById, updateRoom, addRoomImage, deleteRoomImage, updateMainImage, updateRoomPricing, createSpecialPricing, updateSpecialPricing, getSpecialPrice, addRoomType, getRoomTypes, deleteRoomType, updateRoomType, getRoomTypeImage, getRoomsImage, getRoomTypeById } = require('./Room.Controller');
 const { uploadRoomImages, uploadSingleRoomImage } = require('../../config/multerConfig');
 const { verifyTokenAdmin } = require('../../middleware/verifyToken');
 const upload = multer();
@@ -16,6 +16,7 @@ router.post('/addSpecialPrice', createSpecialPricing)
 //Room Type
 router.post('/addRoomType', addRoomType)
 router.get('/roomTypes', getRoomTypes)
+router.get('/roomType/:id', getRoomTypeById)
 //
 
 router.get('/', getAllRooms)

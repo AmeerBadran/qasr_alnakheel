@@ -533,6 +533,16 @@ export const getRoomTypes = async (req, res) => {
     res.status(200).json(roomTypes);
 }
 
+export const getRoomTypeById = async (req, res) => {
+    const lang = getLanguage(req);
+    const { id } = req.params;
+    const roomType = await RoomType.findByPk(id);
+    if (!roomType) {
+        return res.status(404).json({ message: getMessage("roomTypeNotFound", lang) });
+    }
+    res.status(200).json(roomType);
+}
+
 export const updateRoomType = async (req, res) => {
     const lang = getLanguage(req);
     const { id } = req.params;
